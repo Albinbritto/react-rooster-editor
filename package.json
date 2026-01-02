@@ -1,6 +1,6 @@
 {
   "name": "react-rooster-editor",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "A lightweight React wrapper around RoosterJS for building rich text editors",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
