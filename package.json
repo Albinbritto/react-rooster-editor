@@ -18,7 +18,8 @@
   ],
   "scripts": {
     "dev": "tsup --watch",
-    "build": "tsup",
+    "build": "tsup && npm run copy:css",
+    "copy:css": "node scripts/copy-css.cjs",
     "lint": "eslint src --ext .ts,.tsx",
     "type-check": "tsc --noEmit"
   },
