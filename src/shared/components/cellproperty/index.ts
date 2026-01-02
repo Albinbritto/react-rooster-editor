@@ -1,0 +1,1 @@
+export { CellPropertyPanel } from './CellPropertyPanel';

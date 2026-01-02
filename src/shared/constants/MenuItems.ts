@@ -1,0 +1,167 @@
+export const SYSTEM_COLORS = [
+  // Grayscale
+  '#000000',
+  '#444444',
+  '#666666',
+  '#999999',
+  '#CCCCCC',
+  '#EEEEEE',
+  '#F3F3F3',
+  '#FFFFFF',
+
+  // Primary colors - Reds
+  '#FF0000',
+  '#FF3333',
+  '#FF6666',
+  '#FF9999',
+  '#FFCCCC',
+  '#CC0000',
+  '#990000',
+  '#660000',
+
+  // Oranges
+  '#FF6600',
+  '#FF8533',
+  '#FFA366',
+  '#FFC299',
+  '#FFE0CC',
+  '#CC5200',
+  '#993D00',
+  '#662900',
+
+  // Yellows
+  '#FFFF00',
+  '#FFFF33',
+  '#FFFF66',
+  '#FFFF99',
+  '#FFFFCC',
+  '#CCCC00',
+  '#999900',
+  '#666600',
+
+  // Greens
+  '#00FF00',
+  '#33FF33',
+  '#66FF66',
+  '#99FF99',
+  '#CCFFCC',
+  '#00CC00',
+  '#009900',
+  '#006600',
+
+  // Teals/Cyan
+  '#00FFFF',
+  '#33FFFF',
+  '#66FFFF',
+  '#99FFFF',
+  '#CCFFFF',
+  '#00CCCC',
+  '#009999',
+  '#006666',
+
+  // Blues
+  '#0000FF',
+  '#3333FF',
+  '#6666FF',
+  '#9999FF',
+  '#CCCCFF',
+  '#0000CC',
+  '#000099',
+  '#000066',
+
+  // Purples
+  '#9900FF',
+  '#AD33FF',
+  '#C266FF',
+  '#D699FF',
+  '#EBCCFF',
+  '#7A00CC',
+  '#5C0099',
+  '#3D0066',
+
+  // Magentas/Pinks
+  '#FF00FF',
+  '#FF33FF',
+  '#FF66FF',
+  '#FF99FF',
+  '#FFCCFF',
+  '#CC00CC',
+  '#990099',
+  '#660066',
+
+  // Additional common colors
+  '#FFA500',
+  '#FF69B4',
+  '#FFD700',
+  '#98FB98',
+  '#87CEEB',
+  '#DDA0DD',
+  '#F0E68C',
+  '#E6E6FA',
+  '#FFE4B5',
+  '#D2691E',
+  '#CD853F',
+  '#DEB887',
+  '#F4A460',
+  '#BC8F8F',
+  '#FA8072',
+  '#E9967A',
+];
+
+export const FONT_FAMILY = [
+  { label: 'Arial', key: 'Arial,Helvetica,sans-serif' },
+  { label: 'Arial Black', key: "'Arial Black',Arial,sans-serif" },
+  { label: 'Calibri', key: 'Calibri,Helvetica,sans-serif' },
+  {
+    label: 'Calibri Light',
+    key: "'Calibri Light','Helvetica Light',sans-serif",
+  },
+  { label: 'Cambria', key: 'Cambria,Georgia,serif' },
+  { label: 'Candara', key: 'Candara,Optima,sans-serif' },
+  { label: 'Century Gothic', key: "'Century Gothic',sans-serif" },
+  { label: 'Comic Sans MS', key: "'Comic Sans MS',Chalkboard,cursive" },
+  { label: 'Consolas', key: 'Consolas,Courier,monospace' },
+  { label: 'Constantia', key: "Constantia,'Hoefler Text',serif" },
+  { label: 'Corbel', key: 'Corbel,Skia,sans-serif' },
+  { label: 'Courier New', key: "'Courier New',monospace" },
+  {
+    label: 'Franklin Gothic Book',
+    key: "'Franklin Gothic Book','Avenir Next Condensed',sans-serif",
+  },
+  {
+    label: 'Franklin Gothic Demi',
+    key: "'Franklin Gothic Demi','Avenir Next Condensed Demi Bold',sans-serif",
+  },
+  {
+    label: 'Franklin Gothic Medium',
+    key: "'Franklin Gothic Medium','Avenir Next Condensed Medium',sans-serif",
+  },
+  { label: 'Garamond', key: 'Garamond,Georgia,serif' },
+  { label: 'Georgia', key: 'Georgia,serif' },
+  { label: 'Impact', key: 'Impact,Charcoal,sans-serif' },
+  { label: 'Lucida Console', key: "'Lucida Console',Monaco,monospace" },
+  {
+    label: 'Lucida Handwriting',
+    key: "'Lucida Handwriting','Apple Chancery',cursive",
+  },
+  {
+    label: 'Lucida Sans Unicode',
+    key: "'Lucida Sans Unicode','Lucida Grande',sans-serif",
+  },
+  {
+    label: 'Palatino Linotype',
+    key: "'Palatino Linotype','Book Antiqua',Palatino,serif",
+  },
+  {
+    label: 'Segoe UI',
+    key: "'Segoe UI', 'Segoe UI Web (West European)', 'Helvetica Neue', sans-serif",
+  },
+  { label: 'Sitka Heading', key: "'Sitka Heading',Cochin,serif" },
+  { label: 'Sitka Text', key: "'Sitka Text',Cochin,serif" },
+  { label: 'Tahoma', key: 'Tahoma,Geneva,sans-serif' },
+  { label: 'Times', key: "Times,'Times New Roman',serif" },
+  { label: 'Times New Roman', key: "'Times New Roman',Times,serif" },
+  { label: 'Trebuchet MS', key: "'Trebuchet MS',Trebuchet,sans-serif" },
+  { label: 'TW Cen MT', key: "'TW Cen MT','Century Gothic',sans-serif" },
+  { label: 'Verdana', key: 'Verdana,Geneva,sans-serif' },
+];
