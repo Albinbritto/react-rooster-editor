@@ -7,13 +7,15 @@ const path = require('path');
 const projectRoot = __dirname ? path.join(__dirname, '..') : path.resolve('..');
 const inputFile = path.join(projectRoot, 'src', 'styles.css');
 const outputFile = path.join(projectRoot, 'dist', 'styles.css');
+const tailwindConfig = path.join(projectRoot, 'tailwind.config.js');
 
 // Read the input CSS file
 const css = fs.readFileSync(inputFile, 'utf8');
 
 // Process CSS through PostCSS with Tailwind and Autoprefixer
-postcss([tailwindcss, autoprefixer])
-  .process(css, { from: inputFile, to: outputFile })
+// Pass the config path and set cwd to project root so content paths resolve correctly
+postcss([tailwindcss({ config: tailwindConfig }), autoprefixer])
+  .process(css, { from: inputFile, to: outputFile, cwd: projectRoot })
   .then((result) => {
     // Ensure dist directory exists
     const distDir = path.dirname(outputFile);
