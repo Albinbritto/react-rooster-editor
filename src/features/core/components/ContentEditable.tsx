@@ -14,7 +14,7 @@ import {
   TouchPlugin,
 } from 'roosterjs-content-model-plugins';
 import { createListEditMenuProvider, createTableEditMenuProvider } from '../../floatingmenu';
-import { useEffect, useRef } from 'react';
+import { forwardRef, useEffect, useImperativeHandle, useRef } from 'react';
 import { FloatingMenu } from '../../floatingmenu/components/FloatingMenu';
 import { TableReorderPlugin } from '../../tableedit';
 import { createImageEditMenuProvider } from '../../floatingmenu/menus/createImageEditMenuProvider';
@@ -22,7 +22,7 @@ import { useThemeContext } from '../../../shared/contexts/ThemeContext';
 import { getDarkColor } from 'roosterjs-color-utils';
 import { CorePlugin } from '../plugins/CorePlugin';
 
-export const ContentEditable = (props: ContentEditableProps) => {
+export const ContentEditable = forwardRef<IEditor, ContentEditableProps>((props, ref) => {
   const editorDiv = useRef<HTMLDivElement>(null);
   const editor = useRef<IEditor | null>(null);
   const { toolBarPlugin, floatingMenuPlugin, bubbleMenuPlugin } = useViveEditorContext();
@@ -36,7 +36,12 @@ export const ContentEditable = (props: ContentEditableProps) => {
     imageMenuOption,
     listMenuOption,
     onSelectionChanged,
+    onEditorCreated,
+    onEditorDisposed,
+    ...editorOptions
   } = props;
+
+  useImperativeHandle(ref, () => editor.current!, [editor.current]);
 
   function createDefaultPlugin() {
     const imageEditPlugin = imageMenuOption?.show && new ImageEditPlugin();
@@ -69,10 +74,11 @@ export const ContentEditable = (props: ContentEditableProps) => {
       ];
 
       editor.current = (editorCreator || defaultEditorCreator)(editorDiv.current, {
-        ...props,
+        ...editorOptions,
         plugins: pluginList,
         getDarkColor: props.getDarkColor || getDarkColor,
       });
+      onEditorCreated?.(editor.current);
 
       if (isDarkMode) {
         editor.current.setDarkModeState(isDarkMode);
@@ -87,6 +93,7 @@ export const ContentEditable = (props: ContentEditableProps) => {
       if (editor.current) {
         editor.current.dispose();
         editor.current = null;
+        onEditorDisposed?.();
       }
     };
   }, [editorCreator, plugins, toolBarPlugin, bubbleMenuPlugin, isDarkMode, floatingMenuPlugin]);
@@ -102,7 +109,7 @@ export const ContentEditable = (props: ContentEditableProps) => {
       />
     </FloatingMenu>
   );
-};
+});
 
 function defaultEditorCreator(div: HTMLDivElement, options: EditorOptions) {
   return new Editor(div, options);

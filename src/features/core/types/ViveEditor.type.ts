@@ -9,6 +9,8 @@ export interface ContentEditableProps extends EditorOptions, React.HTMLAttribute
   imageMenuOption?: FloatingMenuOption;
   listMenuOption?: FloatingMenuOption;
   onSelectionChanged?: (event: SelectionChangedEvent) => void;
+  onEditorCreated?: (editor: IEditor) => void;
+  onEditorDisposed?: () => void;
 }
 
 export interface ViveToolBarProps {
