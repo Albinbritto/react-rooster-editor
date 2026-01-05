@@ -3,14 +3,12 @@ import { getObjectKeys } from 'roosterjs-content-model-dom';
 import type { ContentModelFormatState, IEditor, PluginEvent } from 'roosterjs-content-model-types';
 import { ToolBarPlugin } from '../types/ToolBarPlugin.types';
 import { ToolBarButton } from '../types/ToolBarButton.type';
-import { UIUtilities } from '../../../shared/types/UIUtilities.type';
 
 class ToolBarPluginImpl implements ToolBarPlugin {
   private editor: IEditor | null = null;
   private onFormatChanged: ((formatState: ContentModelFormatState) => void) | null = null;
   private timer = 0;
   private formatState: ContentModelFormatState | null = null;
-  private uiUtilities: UIUtilities | null = null;
 
   constructor(private delayUpdateTime: number = 200) {}
 
@@ -52,13 +50,9 @@ class ToolBarPluginImpl implements ToolBarPlugin {
     };
   }
 
-  setUIUtilities(uiUtilities: UIUtilities) {
-    this.uiUtilities = uiUtilities;
-  }
-
   onButtonClick<T extends string>(button: ToolBarButton<T>, key: T) {
-    if (this.editor && this.uiUtilities) {
-      button?.onClick?.(this.editor, key, this.uiUtilities);
+    if (this.editor) {
+      button?.onClick?.(this.editor, key);
 
       if (button.isChecked || button.isDisabled || button.dropDownMenu?.getSelectedItemKey) {
         this.updateFormat();

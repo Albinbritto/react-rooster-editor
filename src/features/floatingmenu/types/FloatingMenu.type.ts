@@ -2,7 +2,6 @@ import { ReactNode } from 'react';
 import type { IEditor } from 'roosterjs-content-model-types';
 import { FontAwesomeIconName } from '../../../shared/components/icon/Icon.types';
 import { IContextualMenuItem } from '../../toolbar/types/ToolBarDropDown.type';
-import { UIUtilities } from '../../../shared/types/UIUtilities.type';
 
 export interface FloatingMenuItem {
   /**unique key of this item */
@@ -34,9 +33,8 @@ export interface FloatingMenuItem {
    * @param key Key of the menu item that is clicked
    * @param editor The editor object that triggers this event
    * @param targetNode The node that user is clicking onto
-   * @param uiUtilities UI Utilities to help render additional react component from this click event
    */
-  onClick?: (key: string, editor: IEditor, targetNode: Node, uiUtilities: UIUtilities) => void;
+  onClick?: (key: string, editor: IEditor, targetNode: Node) => void;
 }
 
 export interface FloatingMenuDivider {
@@ -119,3 +117,9 @@ export type FloatingMenuItemType =
   | FloatingMenuHeader
   | FloatingMenuSubMenu
   | FloatingMenuModal;
+
+export interface FloatingMenuOption {
+  show?: boolean;
+  items?: FloatingMenuItemType[];
+  overrideDefaultItems?: boolean;
+}

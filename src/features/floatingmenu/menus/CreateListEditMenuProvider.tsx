@@ -1,7 +1,7 @@
 import { EditorPlugin, IEditor } from 'roosterjs-content-model-types';
 import { createFloatingMenuProvider } from '../utils/createFloatingMenuProvider';
 import { setListStartNumber } from 'roosterjs-content-model-api';
-import { FloatingMenuItemType } from '../types/FloatingMenu.type';
+import { FloatingMenuItemType, FloatingMenuOption } from '../types/FloatingMenu.type';
 import { getEditingList } from './listEditUtils';
 import { Input } from '../../../shared/components/input';
 import { useState, useEffect } from 'react';
@@ -105,10 +105,13 @@ function SetNumberingValue({
   );
 }
 
-export function createListEditMenuProvider(): EditorPlugin {
+export function createListEditMenuProvider(options?: FloatingMenuOption): EditorPlugin {
+  const { items: inputItems = [], overrideDefaultItems } = options || {};
+  const items = overrideDefaultItems ? inputItems : menuItems.concat(inputItems);
+
   return createFloatingMenuProvider(
     'listEdit',
-    menuItems,
+    items,
     (editor, node) => !!getEditingList(editor, node)
   );
 }

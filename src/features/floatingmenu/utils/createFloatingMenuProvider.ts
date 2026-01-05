@@ -1,18 +1,13 @@
 import type { ContextMenuProvider, EditorPlugin, IEditor } from 'roosterjs-content-model-types';
-import { UIUtilities } from '../../../shared/types/UIUtilities.type';
-import { ReactEditorPlugin } from '../../../shared/types/ReactEditorPlugin.type';
 import { FloatingMenuItemType } from '../types/FloatingMenu.type';
 import {
   ContextMenuItemType,
   ContextMenuItem,
 } from '../../../shared/components/contextmenu/ContextMenu.type';
 
-class FloatingMenuProviderImpl
-  implements ContextMenuProvider<ContextMenuItemType>, ReactEditorPlugin
-{
+class FloatingMenuProviderImpl implements ContextMenuProvider<ContextMenuItemType> {
   private editor: IEditor | null = null;
   private targetNode: Node | null = null;
-  private uiUtilities: UIUtilities | null = null;
 
   constructor(
     private menuName: string,
@@ -82,14 +77,10 @@ class FloatingMenuProviderImpl
   }
 
   private onClick(item: ContextMenuItem) {
-    if (this.editor && this.targetNode && this.uiUtilities) {
+    if (this.editor && this.targetNode) {
       const { data } = item;
-      data.onClick(item.key, this.editor, this.targetNode, this.uiUtilities);
+      data.onClick(item.key, this.editor, this.targetNode);
     }
-  }
-
-  setUIUtilities(uiUtilities: UIUtilities) {
-    this.uiUtilities = uiUtilities;
   }
 }
 

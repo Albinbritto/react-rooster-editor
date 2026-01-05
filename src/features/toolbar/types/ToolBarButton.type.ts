@@ -2,7 +2,6 @@ import React from 'react';
 import type { ContentModelFormatState, IEditor } from 'roosterjs-content-model-types';
 import { ToolBarDropDown } from './ToolBarDropDown.type';
 import { FontAwesomeIconName } from '../../../shared/components/icon/Icon.types';
-import { UIUtilities } from '../../../shared/types/UIUtilities.type';
 
 export interface ToolBarButton<T extends string> {
   /**
@@ -23,7 +22,7 @@ export interface ToolBarButton<T extends string> {
    * @param editor the editor instance
    * @param key key of the button that is clicked
    */
-  onClick?: (editor: IEditor, key: T, uiUtilities: UIUtilities) => void;
+  onClick?: (editor: IEditor, key: T) => void;
 
   /**
    * Get if the current button should be checked

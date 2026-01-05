@@ -1,7 +1,7 @@
 import { EditorPlugin, IEditor, TableOperation } from 'roosterjs-content-model-types';
 import { createFloatingMenuProvider } from '../utils/createFloatingMenuProvider';
 import { applyTableBorderFormat, editTable, setTableCellShade } from 'roosterjs-content-model-api';
-import { FloatingMenuItemType } from '../types/FloatingMenu.type';
+import { FloatingMenuItemType, FloatingMenuOption } from '../types/FloatingMenu.type';
 import { CellPropertyPanel } from '../../../shared/components/cellproperty';
 import {
   getAllSelectedCellFormats,
@@ -244,10 +244,13 @@ function CellProperty({
   );
 }
 
-export function createTableEditMenuProvider(): EditorPlugin {
+export function createTableEditMenuProvider(options?: FloatingMenuOption): EditorPlugin {
+  const { items: inputItems = [], overrideDefaultItems } = options || {};
+  const items = overrideDefaultItems ? inputItems : menuItems.concat(inputItems);
+
   return createFloatingMenuProvider(
     'tableEdit',
-    menuItems,
+    items,
     (editor, node) => !!getEditingTable(editor, node)
   );
 }

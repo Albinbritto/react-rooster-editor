@@ -8,7 +8,7 @@ import {
   setImageBoxShadow,
 } from 'roosterjs-content-model-api';
 import { iterateSelections, mutateBlock, updateImageMetadata } from 'roosterjs-content-model-dom';
-import { FloatingMenuItemType } from '../types/FloatingMenu.type';
+import { FloatingMenuItemType, FloatingMenuOption } from '../types/FloatingMenu.type';
 import { ImagePropertyPanel } from '../../../shared/components/imageproperty';
 
 const MIN_WIDTH = 10;
@@ -421,8 +421,14 @@ function resetImage(editor: IEditor) {
   });
 }
 
-export function createImageEditMenuProvider(imageEditor?: ImageEditor): EditorPlugin {
+export function createImageEditMenuProvider(
+  imageEditor?: ImageEditor,
+  options?: FloatingMenuOption
+): EditorPlugin {
   const menuItems = createMenuItems(imageEditor);
 
-  return createFloatingMenuProvider('imageEdit', menuItems, shouldShowImageEditItems);
+  const { items: inputItems = [], overrideDefaultItems } = options || {};
+  const items = overrideDefaultItems ? inputItems : menuItems.concat(inputItems);
+
+  return createFloatingMenuProvider('imageEdit', items, shouldShowImageEditItems);
 }

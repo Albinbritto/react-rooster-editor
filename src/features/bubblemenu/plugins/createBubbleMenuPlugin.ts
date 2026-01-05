@@ -3,7 +3,6 @@ import { getObjectKeys } from 'roosterjs-content-model-dom';
 import type { ContentModelFormatState, IEditor, PluginEvent } from 'roosterjs-content-model-types';
 import { BubbleMenuPlugin, BubbleMenuPosition } from '../types/BubbleMenuPlugin.types';
 import { ToolBarButton } from '../../toolbar/types/ToolBarButton.type';
-import { UIUtilities } from '../../../shared/types/UIUtilities.type';
 import { getSelectedTableCellsRect } from '../../../shared/utils/tableUtil';
 
 class BubbleMenuPluginImpl implements BubbleMenuPlugin {
@@ -12,7 +11,6 @@ class BubbleMenuPluginImpl implements BubbleMenuPlugin {
   private onSelectionChanged: ((position: BubbleMenuPosition | null) => void) | null = null;
   private timer = 0;
   private formatState: ContentModelFormatState | null = null;
-  private uiUtilities: UIUtilities | null = null;
   private rightClicked: boolean = false;
 
   constructor(private delayUpdateTime: number = 200) {}
@@ -62,15 +60,11 @@ class BubbleMenuPluginImpl implements BubbleMenuPlugin {
     };
   }
 
-  setUIUtilities(uiUtilities: UIUtilities) {
-    this.uiUtilities = uiUtilities;
-  }
-
   onButtonClick<T extends string>(button: ToolBarButton<T>, key: T) {
-    if (this.editor && this.uiUtilities) {
+    if (this.editor) {
       this.editor.stopShadowEdit();
 
-      button?.onClick?.(this.editor, key, this.uiUtilities);
+      button?.onClick?.(this.editor, key);
 
       if (button.isChecked || button.isDisabled || button.dropDownMenu?.getSelectedItemKey) {
         this.updateFormat();
