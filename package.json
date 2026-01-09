@@ -21,7 +21,8 @@
     "build": "tsup && npm run build:css",
     "build:css": "node scripts/build-css.cjs",
     "lint": "eslint src --ext .ts,.tsx",
-    "type-check": "tsc --noEmit"
+    "type-check": "tsc --noEmit",
+    "prepublishOnly": "npm run build"
   },
   "keywords": [
     "react",
