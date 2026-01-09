@@ -10,13 +10,11 @@ import {
   MarkdownPlugin,
   PastePlugin,
   ShortcutPlugin,
-  TableEditPlugin,
   TouchPlugin,
 } from 'roosterjs-content-model-plugins';
 import { createListEditMenuProvider, createTableEditMenuProvider } from '../../floatingmenu';
 import { useEffect, useRef } from 'react';
 import { FloatingMenu } from '../../floatingmenu/components/FloatingMenu';
-import { TableReorderPlugin } from '../../tableedit';
 import { createImageEditMenuProvider } from '../../floatingmenu/menus/createImageEditMenuProvider';
 import { useThemeContext } from '../../../shared/contexts/ThemeContext';
 import { getDarkColor } from 'roosterjs-color-utils';
@@ -30,13 +28,15 @@ export const ContentEditable = (props: ContentEditableProps) => {
     toolBarPlugin,
     floatingMenuPlugin,
     bubbleMenuPlugin,
-    tableMenuOption,
-    imageMenuOption,
-    listMenuOption,
+    tableMenu,
+    imageMenu,
+    listMenu,
     onSelectionChanged,
     onEditorCreated,
     onEditorDisposed,
     tablePlugin,
+    autoFormatOptions,
+    editPluginOptions,
   } = useViveEditorContext();
 
   const { isDarkMode } = useThemeContext();
@@ -44,11 +44,12 @@ export const ContentEditable = (props: ContentEditableProps) => {
   const { focusOnInit, editorCreator, plugins = [], ...editorOptions } = props;
 
   function createDefaultPlugin() {
-    const imageEditPlugin = imageMenuOption && new ImageEditPlugin();
+    const imageEditPlugin = imageMenu && new ImageEditPlugin();
+
     return [
       imageEditPlugin,
-      new AutoFormatPlugin(),
-      new EditPlugin(),
+      new AutoFormatPlugin(autoFormatOptions),
+      new EditPlugin(editPluginOptions),
       new HyperlinkPlugin(),
       new MarkdownPlugin(),
       new PastePlugin(),
@@ -57,9 +58,9 @@ export const ContentEditable = (props: ContentEditableProps) => {
       new CorePlugin(onSelectionChanged),
       createTableEditPlugin(tablePlugin),
       createTableReorderPlugin(tablePlugin),
-      createTableEditMenuProvider(tableMenuOption),
-      imageEditPlugin && createImageEditMenuProvider(imageEditPlugin, imageMenuOption),
-      createListEditMenuProvider(listMenuOption),
+      createTableEditMenuProvider(tableMenu),
+      imageEditPlugin && createImageEditMenuProvider(imageEditPlugin, imageMenu),
+      createListEditMenuProvider(listMenu),
     ].filter((plugin) => !!plugin);
   }
 
@@ -96,7 +97,7 @@ export const ContentEditable = (props: ContentEditableProps) => {
         onEditorDisposed?.();
       }
     };
-  }, [editorCreator, tableMenuOption, imageMenuOption, listMenuOption]);
+  }, [editorCreator, tableMenu, imageMenu, listMenu]);
 
   return (
     <FloatingMenu plugin={floatingMenuPlugin}>

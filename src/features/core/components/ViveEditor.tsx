@@ -8,6 +8,7 @@ import { createBubbleMenuPlugin } from '../../bubblemenu';
 import { ThemeProvider } from '../../../shared/contexts/ThemeContext';
 import { DirectionProvider } from '../../../shared/contexts/DirectionContext';
 import { ViveEditorProps } from '../types/ViveEditor.type';
+import { INITIAL_STATE } from '../../../shared/constants/Option';
 
 type ViveEditorContextType = {
   toolBarPlugin: ReturnType<typeof createToolBarPlugin>;
@@ -15,13 +16,15 @@ type ViveEditorContextType = {
   bubbleMenuPlugin: ReturnType<typeof createBubbleMenuPlugin>;
 } & Pick<
   ViveEditorProps,
-  | 'tableMenuOption'
-  | 'imageMenuOption'
-  | 'listMenuOption'
+  | 'tableMenu'
+  | 'imageMenu'
+  | 'listMenu'
   | 'onSelectionChanged'
   | 'onEditorCreated'
   | 'onEditorDisposed'
   | 'tablePlugin'
+  | 'autoFormatOptions'
+  | 'editPluginOptions'
 >;
 
 const ViveEditorContext = createContext<ViveEditorContextType | undefined>(undefined);
@@ -39,13 +42,15 @@ export function ViveEditor(props: ViveEditorProps) {
     children,
     isDarkMode = false,
     dir = 'ltr',
-    imageMenuOption,
-    listMenuOption,
+    imageMenu,
+    listMenu,
     onEditorCreated,
     onEditorDisposed,
     onSelectionChanged,
-    tableMenuOption,
+    tableMenu,
     tablePlugin,
+    autoFormatOptions = {},
+    editPluginOptions = {},
   } = props;
 
   const contextValue = useMemo(
@@ -53,22 +58,26 @@ export function ViveEditor(props: ViveEditorProps) {
       toolBarPlugin: createToolBarPlugin(),
       floatingMenuPlugin: createFloatingMenuPlugin(),
       bubbleMenuPlugin: createBubbleMenuPlugin(),
-      tableMenuOption,
-      imageMenuOption,
-      listMenuOption,
+      tableMenu,
+      imageMenu,
+      listMenu,
       onSelectionChanged,
       onEditorCreated,
       onEditorDisposed,
       tablePlugin,
+      autoFormatOptions: { ...INITIAL_STATE.autoFormatOptions, ...autoFormatOptions },
+      editPluginOptions: { ...INITIAL_STATE.editPluginOptions, ...editPluginOptions },
     }),
     [
-      tableMenuOption,
-      imageMenuOption,
-      listMenuOption,
+      tableMenu,
+      imageMenu,
+      listMenu,
       onSelectionChanged,
       onEditorCreated,
       onEditorDisposed,
       tablePlugin,
+      autoFormatOptions,
+      editPluginOptions,
     ]
   );
 
