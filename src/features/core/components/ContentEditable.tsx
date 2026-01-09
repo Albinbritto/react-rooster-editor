@@ -14,38 +14,39 @@ import {
   TouchPlugin,
 } from 'roosterjs-content-model-plugins';
 import { createListEditMenuProvider, createTableEditMenuProvider } from '../../floatingmenu';
-import { forwardRef, useEffect, useImperativeHandle, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { FloatingMenu } from '../../floatingmenu/components/FloatingMenu';
 import { TableReorderPlugin } from '../../tableedit';
 import { createImageEditMenuProvider } from '../../floatingmenu/menus/createImageEditMenuProvider';
 import { useThemeContext } from '../../../shared/contexts/ThemeContext';
 import { getDarkColor } from 'roosterjs-color-utils';
 import { CorePlugin } from '../plugins/CorePlugin';
+import { createTableEditPlugin, createTableReorderPlugin } from '../helper';
 
-export const ContentEditable = forwardRef<IEditor, ContentEditableProps>((props, ref) => {
+export const ContentEditable = (props: ContentEditableProps) => {
   const editorDiv = useRef<HTMLDivElement>(null);
   const editor = useRef<IEditor | null>(null);
-  const { toolBarPlugin, floatingMenuPlugin, bubbleMenuPlugin } = useViveEditorContext();
-  const { isDarkMode } = useThemeContext();
-
   const {
-    focusOnInit,
-    editorCreator,
-    plugins = [],
+    toolBarPlugin,
+    floatingMenuPlugin,
+    bubbleMenuPlugin,
     tableMenuOption,
     imageMenuOption,
     listMenuOption,
     onSelectionChanged,
     onEditorCreated,
     onEditorDisposed,
-    ...editorOptions
-  } = props;
+    tablePlugin,
+  } = useViveEditorContext();
 
-  useImperativeHandle(ref, () => editor.current!, [editor.current]);
+  const { isDarkMode } = useThemeContext();
+
+  const { focusOnInit, editorCreator, plugins = [], ...editorOptions } = props;
 
   function createDefaultPlugin() {
-    const imageEditPlugin = imageMenuOption?.show && new ImageEditPlugin();
+    const imageEditPlugin = imageMenuOption && new ImageEditPlugin();
     return [
+      imageEditPlugin,
       new AutoFormatPlugin(),
       new EditPlugin(),
       new HyperlinkPlugin(),
@@ -53,13 +54,12 @@ export const ContentEditable = forwardRef<IEditor, ContentEditableProps>((props,
       new PastePlugin(),
       new ShortcutPlugin(),
       new TouchPlugin(),
-      new TableEditPlugin(),
-      new TableReorderPlugin(),
       new CorePlugin(onSelectionChanged),
-      imageEditPlugin,
-      tableMenuOption?.show && createTableEditMenuProvider(tableMenuOption),
+      createTableEditPlugin(tablePlugin),
+      createTableReorderPlugin(tablePlugin),
+      createTableEditMenuProvider(tableMenuOption),
       imageEditPlugin && createImageEditMenuProvider(imageEditPlugin, imageMenuOption),
-      listMenuOption?.show && createListEditMenuProvider(listMenuOption),
+      createListEditMenuProvider(listMenuOption),
     ].filter((plugin) => !!plugin);
   }
 
@@ -96,7 +96,7 @@ export const ContentEditable = forwardRef<IEditor, ContentEditableProps>((props,
         onEditorDisposed?.();
       }
     };
-  }, [editorCreator, plugins, toolBarPlugin, bubbleMenuPlugin, isDarkMode, floatingMenuPlugin]);
+  }, [editorCreator, tableMenuOption, imageMenuOption, listMenuOption]);
 
   return (
     <FloatingMenu plugin={floatingMenuPlugin}>
@@ -109,7 +109,7 @@ export const ContentEditable = forwardRef<IEditor, ContentEditableProps>((props,
       />
     </FloatingMenu>
   );
-});
+};
 
 function defaultEditorCreator(div: HTMLDivElement, options: EditorOptions) {
   return new Editor(div, options);

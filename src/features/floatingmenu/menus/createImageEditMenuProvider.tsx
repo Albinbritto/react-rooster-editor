@@ -423,9 +423,17 @@ function resetImage(editor: IEditor) {
 
 export function createImageEditMenuProvider(
   imageEditor?: ImageEditor,
-  options?: FloatingMenuOption
-): EditorPlugin {
+  options?: FloatingMenuOption | boolean
+): EditorPlugin | undefined {
+  if (!options) {
+    return;
+  }
+
   const menuItems = createMenuItems(imageEditor);
+
+  if (typeof options === 'boolean') {
+    return createFloatingMenuProvider('imageEdit', menuItems, shouldShowImageEditItems);
+  }
 
   const { items: inputItems = [], overrideDefaultItems } = options || {};
   const items = overrideDefaultItems ? inputItems : menuItems.concat(inputItems);

@@ -119,7 +119,6 @@ export type FloatingMenuItemType =
   | FloatingMenuModal;
 
 export interface FloatingMenuOption {
-  show?: boolean;
   items?: FloatingMenuItemType[];
   overrideDefaultItems?: boolean;
 }

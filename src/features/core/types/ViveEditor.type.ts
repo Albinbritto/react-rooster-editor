@@ -1,16 +1,18 @@
-import type { IEditor, EditorOptions, SelectionChangedEvent } from 'roosterjs-content-model-types';
+import type {
+  IEditor,
+  EditorOptions,
+  SelectionChangedEvent,
+  DOMHelper,
+} from 'roosterjs-content-model-types';
 import { ToolBarButton } from '../../toolbar/types/ToolBarButton.type';
 import { FloatingMenuOption } from '../../floatingmenu/types/FloatingMenu.type';
+import { ReactNode } from 'react';
+import { OnTableEditorCreatedCallback } from 'roosterjs-content-model-plugins/lib/tableEdit/OnTableEditorCreatedCallback';
+import { TableEditFeatureName, TableWithRoot } from 'roosterjs-content-model-plugins';
 
 export interface ContentEditableProps extends EditorOptions, React.HTMLAttributes<HTMLDivElement> {
   editorCreator?: (div: HTMLDivElement, options: EditorOptions) => IEditor;
   focusOnInit?: boolean;
-  tableMenuOption?: FloatingMenuOption;
-  imageMenuOption?: FloatingMenuOption;
-  listMenuOption?: FloatingMenuOption;
-  onSelectionChanged?: (event: SelectionChangedEvent) => void;
-  onEditorCreated?: (editor: IEditor) => void;
-  onEditorDisposed?: () => void;
 }
 
 export interface ViveToolBarProps {
@@ -19,4 +21,27 @@ export interface ViveToolBarProps {
 
 export interface ViveBubbleMenuProps {
   buttons?: ToolBarButton<any>[][];
+}
+
+export interface ViveEditorProps {
+  children: ReactNode;
+  className?: string;
+  isDarkMode?: boolean;
+  dir?: 'ltr' | 'rtl';
+  tableMenuOption?: FloatingMenuOption | boolean;
+  imageMenuOption?: FloatingMenuOption | boolean;
+  listMenuOption?: FloatingMenuOption | boolean;
+  onSelectionChanged?: (event: SelectionChangedEvent) => void;
+  onEditorCreated?: (editor: IEditor) => void;
+  onEditorDisposed?: () => void;
+  tablePlugin?: TablePluginOptions | boolean;
+}
+
+export interface TablePluginOptions {
+  anchorContainerSelector?: string | undefined;
+  onTableEditorCreated?: OnTableEditorCreatedCallback | undefined;
+  disableFeatures?:
+    | (TableEditFeatureName[] & ['TableRowReorder' | 'TableColumnReorder'])
+    | undefined;
+  tableSelector?: (domHelper: DOMHelper) => TableWithRoot[];
 }

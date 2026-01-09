@@ -244,7 +244,21 @@ function CellProperty({
   );
 }
 
-export function createTableEditMenuProvider(options?: FloatingMenuOption): EditorPlugin {
+export function createTableEditMenuProvider(
+  options?: FloatingMenuOption | boolean
+): EditorPlugin | undefined {
+  if (!options) {
+    return;
+  }
+
+  if (typeof options === 'boolean') {
+    return createFloatingMenuProvider(
+      'tableEdit',
+      menuItems,
+      (editor, node) => !!getEditingTable(editor, node)
+    );
+  }
+
   const { items: inputItems = [], overrideDefaultItems } = options || {};
   const items = overrideDefaultItems ? inputItems : menuItems.concat(inputItems);
 

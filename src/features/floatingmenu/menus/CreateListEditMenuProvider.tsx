@@ -105,7 +105,21 @@ function SetNumberingValue({
   );
 }
 
-export function createListEditMenuProvider(options?: FloatingMenuOption): EditorPlugin {
+export function createListEditMenuProvider(
+  options?: FloatingMenuOption | boolean
+): EditorPlugin | undefined {
+  if (!options) {
+    return;
+  }
+
+  if (typeof options === 'boolean') {
+    return createFloatingMenuProvider(
+      'listEdit',
+      menuItems,
+      (editor, node) => !!getEditingList(editor, node)
+    );
+  }
+
   const { items: inputItems = [], overrideDefaultItems } = options || {};
   const items = overrideDefaultItems ? inputItems : menuItems.concat(inputItems);
 
